@@ -1,11 +1,21 @@
+import joblib
 import pandas as pd
 import numpy as np
-import joblib
 
 from sklearn.model_selection import GroupShuffleSplit
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
+import json
+from pathlib import Path
+
+from sklearn.metrics import (
+    classification_report,
+    confusion_matrix,
+    accuracy_score,
+    precision_score,
+    recall_score,
+    f1_score,
+)
 
 # =========================
 # CONFIG
@@ -246,8 +256,6 @@ importances = pd.DataFrame({
 print("Top features:")
 print(importances.head(20))
 
-importances.to_csv("trajectory_feature_importance.csv", index=False)
-
 
 # =========================
 # SAVE MODEL
@@ -258,3 +266,86 @@ joblib.dump(list(X.columns), FEATURES_FILE)
 
 print("Saved model:", MODEL_FILE)
 print("Saved features:", FEATURES_FILE)
+
+
+# =========================
+# SAVE MODEL RESULTS FOR DASHBOARD
+# =========================
+
+RESULTS_DIR = Path("data/model_results/adsb")
+RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+
+selected_threshold = FINAL_THRESHOLD
+
+accuracy = accuracy_score(y_test, y_pred)
+attack_precision = precision_score(y_test, y_pred, pos_label=1, zero_division=0)
+attack_recall = recall_score(y_test, y_pred, pos_label=1, zero_division=0)
+attack_f1 = f1_score(y_test, y_pred, pos_label=1, zero_division=0)
+
+model_summary = {
+    "model_name": "Random Forest ADS-B trajectory-only classifier",
+    "model_type": "ADS-B trajectory model",
+    "task": "Binary ADS-B message injection anomaly detection",
+    "selected_threshold": selected_threshold,
+    "accuracy": float(accuracy),
+    "attack_precision": float(attack_precision),
+    "attack_recall": float(attack_recall),
+    "attack_f1": float(attack_f1),
+    "validation_method": "GroupShuffleSplit by icao24",
+    "train_rows": int(len(X_train)),
+    "test_rows": int(len(X_test)),
+    "normal_test_samples": int((y_test == 0).sum()),
+    "attack_test_samples": int((y_test == 1).sum()),
+    "description": (
+        "Model trenowany na danych ADS-B. Wykorzystuje cechy trajektorii, "
+        "takie jak prędkość, heading, wysokość, zmiany pozycji oraz tempo zmian parametrów lotu. "
+        "Model nie używa lat/lon/time/RSS/Doppler, aby był kompatybilny z receiver messages i API."
+    )
+}
+
+with open(RESULTS_DIR / "model_summary.json", "w", encoding="utf-8") as f:
+    json.dump(model_summary, f, indent=2, ensure_ascii=False)
+
+# Confusion matrix dla finalnego thresholda
+cm = confusion_matrix(y_test, y_pred)
+pd.DataFrame(cm).to_csv(
+    RESULTS_DIR / "confusion_matrix.csv",
+    index=False,
+    header=False
+)
+
+# Feature importance
+importances.to_csv(
+    RESULTS_DIR / "feature_importance.csv",
+    index=False
+)
+
+# Threshold results
+threshold_rows = []
+
+for threshold in [0.2, 0.3, 0.35, 0.4, 0.5]:
+    threshold_pred = (y_proba >= threshold).astype(int)
+
+    cm_threshold = confusion_matrix(y_test, threshold_pred)
+    tn, fp = cm_threshold[0]
+    fn, tp = cm_threshold[1]
+
+    threshold_rows.append({
+        "threshold": threshold,
+        "accuracy": accuracy_score(y_test, threshold_pred),
+        "attack_precision": precision_score(y_test, threshold_pred, pos_label=1, zero_division=0),
+        "attack_recall": recall_score(y_test, threshold_pred, pos_label=1, zero_division=0),
+        "attack_f1": f1_score(y_test, threshold_pred, pos_label=1, zero_division=0),
+        "false_alarms": int(fp),
+        "missed_attacks": int(fn),
+        "true_negatives": int(tn),
+        "true_positives": int(tp),
+    })
+
+threshold_results_df = pd.DataFrame(threshold_rows)
+threshold_results_df.to_csv(
+    RESULTS_DIR / "threshold_results.csv",
+    index=False
+)
+
+print("Saved ADS-B model results to:", RESULTS_DIR)

@@ -1,0 +1,16 @@
+{
+  "model_name": "Random Forest ADS-B trajectory-only classifier",
+  "model_type": "ADS-B trajectory model",
+  "task": "Binary ADS-B message injection anomaly detection",
+  "selected_threshold": 0.3,
+  "accuracy": 0.748535270681978,
+  "attack_precision": 0.6519364448857994,
+  "attack_recall": 0.7792284866468843,
+  "attack_f1": 0.7099216004325494,
+  "validation_method": "GroupShuffleSplit by icao24",
+  "train_rows": 18049,
+  "test_rows": 4267,
+  "normal_test_samples": 2582,
+  "attack_test_samples": 1685,
+  "description": "Model trenowany na danych ADS-B. Wykorzystuje cechy trajektorii, takie jak prędkość, heading, wysokość, zmiany pozycji oraz tempo zmian parametrów lotu. Model nie używa lat/lon/time/RSS/Doppler, aby był kompatybilny z receiver messages i API."
+}

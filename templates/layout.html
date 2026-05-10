@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Home - ADS-B Anomaly Detection{% endblock %}
+
+{% block content %}
+<main class="container">
+    <section class="hero">
+        <h1>ADS-B / GPS Spoofing Detection System</h1>
+
+        <p>
+            System webowy do monitorowania anomalii ADS-B, generowania mapy live
+            oraz przeglądania zapisanych map z wcześniejszych eksperymentów.
+        </p>
+
+        <div class="actions">
+            <a class="button primary" href="/map">Otwórz Live Map</a>
+            <a class="button" href="/maps">Zapisane mapy</a>
+            <a class="button" href="/dashboard">Dashboard</a>
+            <a class="button" href="/api/predictions/summary" target="_blank">Predictions Summary</a>
+        </div>
+
+        {% if live_map_exists %}
+            <p class="status ok">Mapa live jest dostępna.</p>
+        {% else %}
+            <p class="status warn">
+                Mapa live nie została jeszcze wygenerowana. Poczekaj na pierwsze pobranie danych
+                albo uruchom worker OpenSky.
+            </p>
+        {% endif %}
+
+        {% if worker_enabled %}
+            {% if worker_alive %}
+                <p class="status ok">OpenSky worker działa w tle.</p>
+            {% else %}
+                <p class="status warn">OpenSky worker jest włączony, ale nie działa.</p>
+            {% endif %}
+        {% else %}
+            <p class="status warn">OpenSky worker jest aktualnie wyłączony.</p>
+        {% endif %}
+    </section>
+</main>
+{% endblock %}

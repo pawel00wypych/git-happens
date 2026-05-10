@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}BIN Signal Dashboard - ADS-B / GNSS Spoofing{% endblock %}
+
+{% block content %}
+<main class="full-page">
+    <section class="map-toolbar">
+        <div>
+            <h1>BIN Signal Comparison</h1>
+            <p>
+                Porównanie surowych sygnałów Clear Sky i Spoofing na podstawie plików BIN.
+            </p>
+        </div>
+    </section>
+
+    {% if dashboard_exists %}
+        <iframe
+            class="dashboard-frame"
+            src="{{ dashboard_url }}">
+        </iframe>
+    {% else %}
+        <div class="empty-state">
+            <h2>Dashboard BIN nie został jeszcze wygenerowany</h2>
+            <p>
+                Uruchom:
+                <code>python scripts/generate_bin_signal_comparison.py</code>
+            </p>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

@@ -1,0 +1,17 @@
+{
+  "model_name": "Random Forest GNSS-SDR radio feature classifier",
+  "model_type": "GNSS-SDR signal-level model",
+  "task": "Binary GNSS spoofing detection",
+  "selected_threshold": 0.5,
+  "accuracy": 0.9508032128514057,
+  "attack_precision": 0.9429708222811671,
+  "attack_recall": 0.9916317991631799,
+  "attack_f1": 0.9666893269884432,
+  "roc_auc": 0.9916617927145663,
+  "validation_method": "StratifiedGroupKFold grouped by source_file and tracking_file",
+  "train_rows": 2998,
+  "test_rows": 996,
+  "normal_test_samples": 279,
+  "attack_test_samples": 717,
+  "description": "Model trenowany na cechach uzyskanych z GNSS-SDR. Wykorzystuje cechy jakości i śledzenia sygnału GNSS, takie jak CN0, Doppler, PLL lock, błędy nośnej, błędy kodu, asymetrię korelatorów oraz dominację prompt. Model działa na poziomie sygnału radiowego, a nie na poziomie trajektorii ADS-B."
+}
