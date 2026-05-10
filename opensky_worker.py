@@ -53,13 +53,19 @@ MAX_HISTORY_ROWS = 50_000
 TRAJECTORY_HISTORY_POINTS = 30
 
 # Bounding box: Polska / Europa Środkowa.
-BOUNDING_BOX = {
-    "lamin": 48.5,
-    "lomin": 13.5,
-    "lamax": 59.5,
-    "lomax": 27.0,
-}
+# BOUNDING_BOX = {
+#     "lamin": 48.5,
+#     "lomin": 13.5,
+#     "lamax": 59.5,
+#     "lomax": 27.0,
+# }
 
+BOUNDING_BOX = {
+    "lamin": 50.088104,
+    "lomin": 15.644531,
+    "lamax": 55.510012,
+    "lomax": 23.686523,
+}
 # Opcjonalnie: jeśli chcesz testować jeden samolot, wpisz ICAO24.
 # Jeśli None, pobiera samoloty z bounding boxa.
 ICAO24_FILTER = None
