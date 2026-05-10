@@ -22,9 +22,9 @@ SINGLE_FILE = "AV-GPS-Dataset-1.csv"
 
 # Maksymalna liczba punktów rysowanych na mapie z jednego pliku.
 # Przy dużych CSV mapa może być ciężka, więc ograniczamy do demo.
-NORMAL_POINTS = 10
-SPOOF_POINTS = 10
-MARKER_EVERY_N = 10
+NORMAL_POINTS = 8
+SPOOF_POINTS = 4
+MARKER_EVERY_N = 1
 
 
 def normalize_col_name(col: str) -> str:
@@ -205,8 +205,7 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
     if map_df.empty:
         raise ValueError("No valid lat/lon rows for map.")
 
-    # Bierzemy jeden scenariusz/plik, żeby mapa była czytelna.
-    # Preferujemy plik, który zawiera spoofing.
+    # Wybieramy jeden plik/scenariusz do czytelnej mapy
     spoof_devices = (
         map_df.groupby("device_id")["is_spoofed"]
         .max()
@@ -220,21 +219,34 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
     normal_df = track[track["is_spoofed"] == 0].copy()
     spoof_df = track[track["is_spoofed"] == 1].copy()
 
-    # Jeżeli plik zawiera tylko spoofing, bierzemy początkowy fragment jako tło/normal-like.
+    # Jeżeli plik zawiera tylko spoofing, robimy demo:
+    # początek jako normalny, reszta jako spoofowana.
     if normal_df.empty and not spoof_df.empty:
-        split_idx = max(1, int(len(track) * 0.35))
+        split_idx = max(1, int(len(track) * 0.45))
+
         normal_df = track.iloc[:split_idx].copy()
         spoof_df = track.iloc[split_idx:].copy()
+
         normal_df["is_spoofed"] = 0
         spoof_df["is_spoofed"] = 1
 
+    # Ograniczamy liczbę punktów, ale zachowujemy kolejność
     normal_df = downsample_for_map(normal_df, NORMAL_POINTS)
     spoof_df = downsample_for_map(spoof_df, SPOOF_POINTS)
 
-    combined_for_center = pd.concat([normal_df, spoof_df], ignore_index=True)
+    # Tworzymy jedną ścieżkę: normal -> spoofing
+    path_df = pd.concat([normal_df, spoof_df], ignore_index=True)
+    path_df = path_df.dropna(subset=["lat", "lon"]).copy()
 
-    center_lat = combined_for_center["lat"].mean()
-    center_lon = combined_for_center["lon"].mean()
+    if path_df.empty:
+        raise ValueError("No path points after filtering.")
+
+    # Ustawiamy sztuczną kolejność sekwencji po połączeniu,
+    # bo chcemy pokazać jedną czytelną trajektorię demonstracyjną.
+    path_df["path_index"] = range(1, len(path_df) + 1)
+
+    center_lat = path_df["lat"].mean()
+    center_lon = path_df["lon"].mean()
 
     m = folium.Map(
         location=[center_lat, center_lon],
@@ -242,88 +254,136 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
         tiles="OpenStreetMap",
     )
 
-    normal_points = normal_df[["lat", "lon"]].values.tolist()
-    spoof_points = spoof_df[["lat", "lon"]].values.tolist()
+    # ============================================================
+    # Jedna ścieżka, segment po segmencie
+    # ============================================================
 
-    # Normal trajectory
-    if len(normal_points) >= 2:
-        folium.PolyLine(
-            locations=normal_points,
-            color="green",
-            weight=6,
-            opacity=0.85,
-            tooltip="Normal GPS trajectory",
-        ).add_to(m)
+    path_rows = path_df.to_dict("records")
 
-    # Spoofed trajectory
-    if len(spoof_points) >= 2:
+    for i in range(len(path_rows) - 1):
+        current = path_rows[i]
+        nxt = path_rows[i + 1]
+
+        p1 = [current["lat"], current["lon"]]
+        p2 = [nxt["lat"], nxt["lon"]]
+
+        current_spoofed = int(current["is_spoofed"]) == 1
+        next_spoofed = int(nxt["is_spoofed"]) == 1
+
+        if not current_spoofed and not next_spoofed:
+            color = "green"
+            dash_array = None
+            tooltip = "Normal GPS trajectory segment"
+        elif not current_spoofed and next_spoofed:
+            color = "orange"
+            dash_array = "6, 8"
+            tooltip = "Transition to spoofing"
+        else:
+            color = "red"
+            dash_array = "10, 8"
+            tooltip = "Spoofed / anomalous GPS trajectory segment"
+
         folium.PolyLine(
-            locations=spoof_points,
-            color="red",
+            locations=[p1, p2],
+            color=color,
             weight=6,
             opacity=0.9,
-            dash_array="10, 8",
-            tooltip="Spoofed / anomalous GPS trajectory",
+            dash_array=dash_array,
+            tooltip=tooltip,
         ).add_to(m)
 
-    # Connection between last normal and first spoofed point
-    if len(normal_points) > 0 and len(spoof_points) > 0:
-        folium.PolyLine(
-            locations=[normal_points[-1], spoof_points[0]],
-            color="orange",
-            weight=4,
-            opacity=0.9,
-            dash_array="5, 8",
-            tooltip="Transition to spoofing",
+    # ============================================================
+    # Markery punktów na jednej ścieżce
+    # ============================================================
+
+    for i, row in path_df.iterrows():
+        path_index = int(row["path_index"])
+        is_spoofed = int(row["is_spoofed"]) == 1
+
+        # Przy małej liczbie punktów można pokazać wszystkie.
+        # Przy większej pokazujemy co MARKER_EVERY_N i ostatni.
+        if (
+            path_index % MARKER_EVERY_N != 0
+            and path_index != 1
+            and path_index != len(path_df)
+        ):
+            continue
+
+        if is_spoofed:
+            color = "red"
+            status = "GPS spoofing attack point"
+        else:
+            color = "green"
+            status = "Normal GPS point"
+
+        popup = f"""
+        <b>Status:</b> {status}<br>
+        <b>Path point:</b> {path_index}/{len(path_df)}<br>
+        <b>Device/file:</b> {row.get("device_id", "")}<br>
+        <b>Source file:</b> {row.get("source_file", "")}<br>
+        <hr>
+        <b>Timestamp:</b> {row.get("timestamp", "")}<br>
+        <b>Latitude:</b> {row.get("lat", "")}<br>
+        <b>Longitude:</b> {row.get("lon", "")}<br>
+        <b>Altitude:</b> {row.get("altitude", "")}<br>
+        <b>Speed:</b> {row.get("speed", "")}<br>
+        <b>Heading:</b> {row.get("heading", "")}<br>
+        <b>is_spoofed:</b> {row.get("is_spoofed", "")}
+        """
+
+        # Numer punktu jako tooltip
+        folium.CircleMarker(
+            location=[row["lat"], row["lon"]],
+            radius=7 if is_spoofed else 6,
+            color=color,
+            fill=True,
+            fill_color=color,
+            fill_opacity=0.9,
+            popup=popup,
+            tooltip=f"{path_index}: {status}",
         ).add_to(m)
 
-    # Numbered/selected markers only every N points
-    def add_sparse_markers(points_df: pd.DataFrame, color: str, status: str):
-        for i, (_, row) in enumerate(points_df.iterrows()):
-            if i % MARKER_EVERY_N != 0 and i != len(points_df) - 1:
-                continue
-
-            popup = f"""
-            <b>Status:</b> {status}<br>
-            <b>Device/file:</b> {row.get("device_id", "")}<br>
-            <b>Source file:</b> {row.get("source_file", "")}<br>
-            <hr>
-            <b>Timestamp:</b> {row.get("timestamp", "")}<br>
-            <b>Latitude:</b> {row.get("lat", "")}<br>
-            <b>Longitude:</b> {row.get("lon", "")}<br>
-            <b>Altitude:</b> {row.get("altitude", "")}<br>
-            <b>Speed:</b> {row.get("speed", "")}<br>
-            <b>Heading:</b> {row.get("heading", "")}<br>
-            <b>is_spoofed:</b> {row.get("is_spoofed", "")}
-            """
-
-            folium.CircleMarker(
-                location=[row["lat"], row["lon"]],
-                radius=6,
-                color=color,
-                fill=True,
-                fill_color=color,
-                fill_opacity=0.85,
-                popup=popup,
-                tooltip=f"{status} | point {i}",
-            ).add_to(m)
-
-    add_sparse_markers(normal_df, "green", "Normal GPS data")
-    add_sparse_markers(spoof_df, "red", "GPS spoofing attack")
-
-    # Start marker
-    if len(normal_df) > 0:
-        first = normal_df.iloc[0]
+        # Numerowana etykieta obok punktu
         folium.Marker(
-            location=[first["lat"], first["lon"]],
-            popup="Start of normal GPS trajectory",
-            tooltip="Start",
-            icon=folium.Icon(color="green", icon="play"),
+            location=[row["lat"], row["lon"]],
+            icon=folium.DivIcon(
+                html=f"""
+                <div style="
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: white;
+                    background: {color};
+                    border-radius: 50%;
+                    width: 22px;
+                    height: 22px;
+                    line-height: 22px;
+                    text-align: center;
+                    border: 2px solid white;
+                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+                ">
+                    {path_index}
+                </div>
+                """
+            ),
         ).add_to(m)
 
-    # Spoofing start marker
-    if len(spoof_df) > 0:
-        first_spoof = spoof_df.iloc[0]
+    # ============================================================
+    # Markery start / spoofing start / end
+    # ============================================================
+
+    first = path_df.iloc[0]
+
+    folium.Marker(
+        location=[first["lat"], first["lon"]],
+        popup="Start of GPS trajectory",
+        tooltip="Start of trajectory",
+        icon=folium.Icon(color="green", icon="play"),
+    ).add_to(m)
+
+    spoof_start_df = path_df[path_df["is_spoofed"] == 1]
+
+    if not spoof_start_df.empty:
+        first_spoof = spoof_start_df.iloc[0]
 
         folium.Marker(
             location=[first_spoof["lat"], first_spoof["lon"]],
@@ -332,10 +392,9 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
             icon=folium.Icon(color="orange", icon="warning-sign"),
         ).add_to(m)
 
-        # Highlight anomaly start
         folium.Circle(
             location=[first_spoof["lat"], first_spoof["lon"]],
-            radius=25,
+            radius=30,
             color="red",
             fill=True,
             fill_color="red",
@@ -343,22 +402,28 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
             popup="Suspicious GPS trajectory deviation starts here",
         ).add_to(m)
 
-    # End marker
-    if len(spoof_df) > 0:
-        last = spoof_df.iloc[-1]
-        folium.Marker(
-            location=[last["lat"], last["lon"]],
-            popup="Final spoofed GPS position",
-            tooltip="Final spoofed GPS position",
-            icon=folium.Icon(color="red", icon="remove"),
-        ).add_to(m)
+    last = path_df.iloc[-1]
+
+    folium.Marker(
+        location=[last["lat"], last["lon"]],
+        popup="Final GPS position",
+        tooltip="Final GPS position",
+        icon=folium.Icon(color="red", icon="remove"),
+    ).add_to(m)
+
+    # ============================================================
+    # Legenda i callout
+    # ============================================================
+
+    normal_count = int((path_df["is_spoofed"] == 0).sum())
+    spoof_count = int((path_df["is_spoofed"] == 1).sum())
 
     legend_html = f"""
     <div style="
         position: fixed;
         bottom: 50px;
         left: 50px;
-        width: 390px;
+        width: 410px;
         background-color: white;
         border: 2px solid grey;
         z-index: 9999;
@@ -369,13 +434,14 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
     ">
         <b>GPS Spoofing Trajectory Demo</b><br>
         <span style="color:green;">━</span> Normal GPS trajectory<br>
-        <span style="color:red;">━ ━</span> Spoofed / anomalous GPS trajectory<br>
         <span style="color:orange;">- - -</span> Transition to spoofing<br>
+        <span style="color:red;">━ ━</span> Spoofed / anomalous trajectory<br>
         <hr>
         Dataset: AV-GPS<br>
-        Selected device/file: {selected_device}<br>
-        Normal points shown: {len(normal_df)}<br>
-        Spoofed points shown: {len(spoof_df)}
+        Selected file: {selected_device}<br>
+        Normal points: {normal_count}<br>
+        Spoofed points: {spoof_count}<br>
+        Total shown points: {len(path_df)}
     </div>
     """
 
@@ -384,7 +450,7 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
         position: fixed;
         top: 90px;
         right: 40px;
-        width: 340px;
+        width: 360px;
         background-color: white;
         border: 2px solid #cc0000;
         z-index: 9999;
@@ -394,7 +460,7 @@ def create_spoofing_map(df: pd.DataFrame) -> folium.Map:
         box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     ">
         <b style="color:#cc0000; font-size:18px;">⚠ Spoofing anomaly</b><br>
-        Reported GPS trajectory deviates from the expected path.
+        One continuous GPS path contains normal points followed by spoofed/anomalous points.
     </div>
     """
 

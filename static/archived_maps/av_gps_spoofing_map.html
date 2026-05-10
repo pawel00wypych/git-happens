@@ -17,7 +17,7 @@
             <meta name="viewport" content="width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
             <style>
-                #map_47ef0a10bfd1fee1fa1dfafbf7495250 {
+                #map_3e0fe6097956b44aace4c96ecb5e41ec {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -58,7 +58,7 @@
         position: fixed;
         bottom: 50px;
         left: 50px;
-        width: 390px;
+        width: 410px;
         background-color: white;
         border: 2px solid grey;
         z-index: 9999;
@@ -69,13 +69,14 @@
     ">
         <b>GPS Spoofing Trajectory Demo</b><br>
         <span style="color:green;">━</span> Normal GPS trajectory<br>
-        <span style="color:red;">━ ━</span> Spoofed / anomalous GPS trajectory<br>
         <span style="color:orange;">- - -</span> Transition to spoofing<br>
+        <span style="color:red;">━ ━</span> Spoofed / anomalous trajectory<br>
         <hr>
         Dataset: AV-GPS<br>
-        Selected device/file: AV-GPS-Dataset-1<br>
-        Normal points shown: 10<br>
-        Spoofed points shown: 10
+        Selected file: AV-GPS-Dataset-1<br>
+        Normal points: 8<br>
+        Spoofed points: 4<br>
+        Total shown points: 12
     </div>
     
     
@@ -83,7 +84,7 @@
         position: fixed;
         top: 90px;
         right: 40px;
-        width: 340px;
+        width: 360px;
         background-color: white;
         border: 2px solid #cc0000;
         z-index: 9999;
@@ -93,20 +94,20 @@
         box-shadow: 0 2px 10px rgba(0,0,0,0.25);
     ">
         <b style="color:#cc0000; font-size:18px;">⚠ Spoofing anomaly</b><br>
-        Reported GPS trajectory deviates from the expected path.
+        One continuous GPS path contains normal points followed by spoofed/anomalous points.
     </div>
     
     
-            <div class="folium-map" id="map_47ef0a10bfd1fee1fa1dfafbf7495250" ></div>
+            <div class="folium-map" id="map_3e0fe6097956b44aace4c96ecb5e41ec" ></div>
         
 </body>
 <script>
     
     
-            var map_47ef0a10bfd1fee1fa1dfafbf7495250 = L.map(
-                "map_47ef0a10bfd1fee1fa1dfafbf7495250",
+            var map_3e0fe6097956b44aace4c96ecb5e41ec = L.map(
+                "map_3e0fe6097956b44aace4c96ecb5e41ec",
                 {
-                    center: [30.857514274999993, -77.33043042999999],
+                    center: [31.461884066666666, -92.28513484166666],
                     crs: L.CRS.EPSG3857,
                     ...{
   "zoom": 17,
@@ -121,7 +122,7 @@
 
         
     
-            var tile_layer_189399b0e8424708d4dec1bdef8e19c2 = L.tileLayer(
+            var tile_layer_d0eed61fbbdb44b95023d4f9b321c722 = L.tileLayer(
                 "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
                 {
   "minZoom": 0,
@@ -138,18 +139,18 @@
             );
         
     
-            tile_layer_189399b0e8424708d4dec1bdef8e19c2.addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            tile_layer_d0eed61fbbdb44b95023d4f9b321c722.addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            var poly_line_4a745506314dfb808f658d52b52dcf53 = L.polyline(
-                [[32.2312767, -110.9452798], [32.2315533, -110.9452889], [32.2314508, -110.9455091], [32.2315372, -110.9446468], [32.2315347, -110.944512], [32.231266, -110.945734], [32.2315422, -110.9446087], [32.2314444, -110.945432], [32.2350435, -110.9541629], [32.2354415, -110.954323]],
-                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            var poly_line_af3451a3906ab2f65d75b25a9bc81409 = L.polyline(
+                [[32.2312767, -110.9452798], [32.2313293, -110.945725]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            poly_line_4a745506314dfb808f658d52b52dcf53.bindTooltip(
+            poly_line_af3451a3906ab2f65d75b25a9bc81409.bindTooltip(
                 `<div>
-                     Normal GPS trajectory
+                     Normal GPS trajectory segment
                  </div>`,
                 {
   "sticky": true,
@@ -157,15 +158,15 @@
             );
         
     
-            var poly_line_4321721283e2313b90fe56169d484ee0 = L.polyline(
-                [[32.2314302, -110.945113], [32.2502265, -110.9532811], [32.230728, -110.9521334], [32.0955495, -111.2030379], [23.1063242, 113.259804], [23.1064625, 113.2597098], [23.1065467, 113.2596686], [32.2195104, -110.9658077], [32.2311907, -110.9456396], [32.2502265, -110.9532811]],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            var poly_line_1b71bd54f85f711d77bc07923988f882 = L.polyline(
+                [[32.2313293, -110.945725], [32.231319, -110.9448384]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            poly_line_4321721283e2313b90fe56169d484ee0.bindTooltip(
+            poly_line_1b71bd54f85f711d77bc07923988f882.bindTooltip(
                 `<div>
-                     Spoofed / anomalous GPS trajectory
+                     Normal GPS trajectory segment
                  </div>`,
                 {
   "sticky": true,
@@ -173,13 +174,93 @@
             );
         
     
-            var poly_line_b479c63bb9a912f27d427cc4f4f4d8c8 = L.polyline(
+            var poly_line_a16ec99dfff41ecc8da961f85bc79c2d = L.polyline(
+                [[32.231319, -110.9448384], [32.2315535, -110.9452719]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_a16ec99dfff41ecc8da961f85bc79c2d.bindTooltip(
+                `<div>
+                     Normal GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_8f6d0ab4a94e5673ef37552b6cce4b5e = L.polyline(
+                [[32.2315535, -110.9452719], [32.2312994, -110.9454058]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_8f6d0ab4a94e5673ef37552b6cce4b5e.bindTooltip(
+                `<div>
+                     Normal GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4e71b47b8e2980e14559de5da7eadd54 = L.polyline(
+                [[32.2312994, -110.9454058], [32.2313051, -110.9450293]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_4e71b47b8e2980e14559de5da7eadd54.bindTooltip(
+                `<div>
+                     Normal GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5209cee9bd9893ae4d2ce8ec17d4a0bd = L.polyline(
+                [[32.2313051, -110.9450293], [32.2353314, -110.9539815]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_5209cee9bd9893ae4d2ce8ec17d4a0bd.bindTooltip(
+                `<div>
+                     Normal GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_5ba1653e1816b1aa14de8ea4d8a572b7 = L.polyline(
+                [[32.2353314, -110.9539815], [32.2354415, -110.954323]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_5ba1653e1816b1aa14de8ea4d8a572b7.bindTooltip(
+                `<div>
+                     Normal GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2d4a9b6cfed174c07035842ac32a5391 = L.polyline(
                 [[32.2354415, -110.954323], [32.2314302, -110.945113]],
-                {"bubblingMouseEvents": true, "color": "orange", "dashArray": "5, 8", "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 4}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": "6, 8", "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            poly_line_b479c63bb9a912f27d427cc4f4f4d8c8.bindTooltip(
+            poly_line_2d4a9b6cfed174c07035842ac32a5391.bindTooltip(
                 `<div>
                      Transition to spoofing
                  </div>`,
@@ -189,32 +270,15 @@
             );
         
     
-            var circle_marker_ba4e59c43391f360b439b1ea027cc003 = L.circleMarker(
-                [32.2312767, -110.9452798],
-                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            var poly_line_79baa82fc402e86894e6a9500a4fe51a = L.polyline(
+                [[32.2314302, -110.945113], [32.0955495, -111.2030379]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-        var popup_ad1c8bef2d76da41414167270d7d2916 = L.popup({
-  "maxWidth": "100%",
-});
-
-        
-            
-                var html_8c6d1746ea1dde0a3a6f89fc1d97a0fd = $(`<div id="html_8c6d1746ea1dde0a3a6f89fc1d97a0fd" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> Normal GPS data<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 00:00:00+00:00<br>             <b>Latitude:</b> 32.2312767<br>             <b>Longitude:</b> -110.9452798<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 0             </div>`)[0];
-                popup_ad1c8bef2d76da41414167270d7d2916.setContent(html_8c6d1746ea1dde0a3a6f89fc1d97a0fd);
-            
-        
-
-        circle_marker_ba4e59c43391f360b439b1ea027cc003.bindPopup(popup_ad1c8bef2d76da41414167270d7d2916)
-        ;
-
-        
-    
-    
-            circle_marker_ba4e59c43391f360b439b1ea027cc003.bindTooltip(
+            poly_line_79baa82fc402e86894e6a9500a4fe51a.bindTooltip(
                 `<div>
-                     Normal GPS data | point 0
+                     Spoofed / anomalous GPS trajectory segment
                  </div>`,
                 {
   "sticky": true,
@@ -222,32 +286,407 @@
             );
         
     
-            var circle_marker_e4138d4625dc87e450ee103631fba290 = L.circleMarker(
+            var poly_line_08a11288e89e37745384df68455d06a9 = L.polyline(
+                [[32.0955495, -111.2030379], [23.1065467, 113.2596686]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_08a11288e89e37745384df68455d06a9.bindTooltip(
+                `<div>
+                     Spoofed / anomalous GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_2f29740dd5dbfc44bdc91e87e5e5755a = L.polyline(
+                [[23.1065467, 113.2596686], [32.2502265, -110.9532811]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            poly_line_2f29740dd5dbfc44bdc91e87e5e5755a.bindTooltip(
+                `<div>
+                     Spoofed / anomalous GPS trajectory segment
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_dae1fdd7de1627a5823098efad9338ae = L.circleMarker(
+                [32.2312767, -110.9452798],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_ffdd92a015e42f89a58b26f664d8e67e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0ada4f35d395dd36ef2e350eb3be0072 = $(`<div id="html_0ada4f35d395dd36ef2e350eb3be0072" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 1/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 00:00:00+00:00<br>         <b>Latitude:</b> 32.2312767<br>         <b>Longitude:</b> -110.9452798<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_ffdd92a015e42f89a58b26f664d8e67e.setContent(html_0ada4f35d395dd36ef2e350eb3be0072);
+            
+        
+
+        circle_marker_dae1fdd7de1627a5823098efad9338ae.bindPopup(popup_ffdd92a015e42f89a58b26f664d8e67e)
+        ;
+
+        
+    
+    
+            circle_marker_dae1fdd7de1627a5823098efad9338ae.bindTooltip(
+                `<div>
+                     1: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_c67185e5924f8bf56b7248966f549760 = L.marker(
+                [32.2312767, -110.9452798],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_00b0a42247c4ab7e897b0e8919353584 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    1\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_c67185e5924f8bf56b7248966f549760.setIcon(div_icon_00b0a42247c4ab7e897b0e8919353584);
+            
+    
+            var circle_marker_1c32f424464184b8e32ed69fb3d3843a = L.circleMarker(
+                [32.2313293, -110.945725],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_a20218ec043f1ab0c20b66b37488b57d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fe940104e7f2bf7700129f03aa13e60e = $(`<div id="html_fe940104e7f2bf7700129f03aa13e60e" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 2/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 03:08:25+00:00<br>         <b>Latitude:</b> 32.2313293<br>         <b>Longitude:</b> -110.945725<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_a20218ec043f1ab0c20b66b37488b57d.setContent(html_fe940104e7f2bf7700129f03aa13e60e);
+            
+        
+
+        circle_marker_1c32f424464184b8e32ed69fb3d3843a.bindPopup(popup_a20218ec043f1ab0c20b66b37488b57d)
+        ;
+
+        
+    
+    
+            circle_marker_1c32f424464184b8e32ed69fb3d3843a.bindTooltip(
+                `<div>
+                     2: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_05f34b9a81a6f9631fa83134ff8f7fca = L.marker(
+                [32.2313293, -110.945725],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_b599246d5ef9a195ae5c91509dad4877 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    2\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_05f34b9a81a6f9631fa83134ff8f7fca.setIcon(div_icon_b599246d5ef9a195ae5c91509dad4877);
+            
+    
+            var circle_marker_7ecf40ac0e3686c00deb5f7eac00c6f6 = L.circleMarker(
+                [32.231319, -110.9448384],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_486f35a66c001ca5c1e3f69875adbcd5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_df286c27ca828e6e6fe2a11477763b31 = $(`<div id="html_df286c27ca828e6e6fe2a11477763b31" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 3/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 04:58:37+00:00<br>         <b>Latitude:</b> 32.231319<br>         <b>Longitude:</b> -110.9448384<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_486f35a66c001ca5c1e3f69875adbcd5.setContent(html_df286c27ca828e6e6fe2a11477763b31);
+            
+        
+
+        circle_marker_7ecf40ac0e3686c00deb5f7eac00c6f6.bindPopup(popup_486f35a66c001ca5c1e3f69875adbcd5)
+        ;
+
+        
+    
+    
+            circle_marker_7ecf40ac0e3686c00deb5f7eac00c6f6.bindTooltip(
+                `<div>
+                     3: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_b04fc54534f0ba30bd8632c36d1e7915 = L.marker(
+                [32.231319, -110.9448384],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_b266f0ee5d1325b096bedb1115cd63b0 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    3\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_b04fc54534f0ba30bd8632c36d1e7915.setIcon(div_icon_b266f0ee5d1325b096bedb1115cd63b0);
+            
+    
+            var circle_marker_cb068932a60394bd392510f0f1fbf5f1 = L.circleMarker(
+                [32.2315535, -110.9452719],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_d34680d4cd58087cf9ce6032f6e33c9e = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0effda3ed457e4a442c346dfb75a4d72 = $(`<div id="html_0effda3ed457e4a442c346dfb75a4d72" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 4/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 06:48:49+00:00<br>         <b>Latitude:</b> 32.2315535<br>         <b>Longitude:</b> -110.9452719<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_d34680d4cd58087cf9ce6032f6e33c9e.setContent(html_0effda3ed457e4a442c346dfb75a4d72);
+            
+        
+
+        circle_marker_cb068932a60394bd392510f0f1fbf5f1.bindPopup(popup_d34680d4cd58087cf9ce6032f6e33c9e)
+        ;
+
+        
+    
+    
+            circle_marker_cb068932a60394bd392510f0f1fbf5f1.bindTooltip(
+                `<div>
+                     4: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_4720bfd9870cce3140d7b63303d1e21c = L.marker(
+                [32.2315535, -110.9452719],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_f696942dbfddf8608248f54d57fcb920 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    4\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_4720bfd9870cce3140d7b63303d1e21c.setIcon(div_icon_f696942dbfddf8608248f54d57fcb920);
+            
+    
+            var circle_marker_39a70c4e278649d32f807bf9a818a0fe = L.circleMarker(
+                [32.2312994, -110.9454058],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_4ffa2c514ef498e6a11ac9bd71a9e61d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_eff5cf252eba696a48c13227c39eab1a = $(`<div id="html_eff5cf252eba696a48c13227c39eab1a" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 5/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 08:48:52+00:00<br>         <b>Latitude:</b> 32.2312994<br>         <b>Longitude:</b> -110.9454058<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_4ffa2c514ef498e6a11ac9bd71a9e61d.setContent(html_eff5cf252eba696a48c13227c39eab1a);
+            
+        
+
+        circle_marker_39a70c4e278649d32f807bf9a818a0fe.bindPopup(popup_4ffa2c514ef498e6a11ac9bd71a9e61d)
+        ;
+
+        
+    
+    
+            circle_marker_39a70c4e278649d32f807bf9a818a0fe.bindTooltip(
+                `<div>
+                     5: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_776c3db9ff0b9c8a22073f1e109657fd = L.marker(
+                [32.2312994, -110.9454058],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_50379e26121b93d01a151f2cdeb033d9 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    5\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_776c3db9ff0b9c8a22073f1e109657fd.setIcon(div_icon_50379e26121b93d01a151f2cdeb033d9);
+            
+    
+            var circle_marker_8cbb4032345ad05f13ef69bfcf0383e6 = L.circleMarker(
+                [32.2313051, -110.9450293],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_08d69b54509ce0ae56cb741096ca6bd4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_db32052b870d514e229e90adedc87f41 = $(`<div id="html_db32052b870d514e229e90adedc87f41" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 6/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 10:39:04+00:00<br>         <b>Latitude:</b> 32.2313051<br>         <b>Longitude:</b> -110.9450293<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_08d69b54509ce0ae56cb741096ca6bd4.setContent(html_db32052b870d514e229e90adedc87f41);
+            
+        
+
+        circle_marker_8cbb4032345ad05f13ef69bfcf0383e6.bindPopup(popup_08d69b54509ce0ae56cb741096ca6bd4)
+        ;
+
+        
+    
+    
+            circle_marker_8cbb4032345ad05f13ef69bfcf0383e6.bindTooltip(
+                `<div>
+                     6: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_03365a929cdcabd3e2f5aef41cb5975b = L.marker(
+                [32.2313051, -110.9450293],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_86f419a461d5f8e196af35ec9816d380 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    6\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_03365a929cdcabd3e2f5aef41cb5975b.setIcon(div_icon_86f419a461d5f8e196af35ec9816d380);
+            
+    
+            var circle_marker_83b2ddaca014cf8eedf6ebdf3c2e885c = L.circleMarker(
+                [32.2353314, -110.9539815],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_71f1f305e581797e09b2a54181b9eea7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_12011037bd14b05755ab8ca184241fb5 = $(`<div id="html_12011037bd14b05755ab8ca184241fb5" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 7/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 15:23:48+00:00<br>         <b>Latitude:</b> 32.2353314<br>         <b>Longitude:</b> -110.9539815<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_71f1f305e581797e09b2a54181b9eea7.setContent(html_12011037bd14b05755ab8ca184241fb5);
+            
+        
+
+        circle_marker_83b2ddaca014cf8eedf6ebdf3c2e885c.bindPopup(popup_71f1f305e581797e09b2a54181b9eea7)
+        ;
+
+        
+    
+    
+            circle_marker_83b2ddaca014cf8eedf6ebdf3c2e885c.bindTooltip(
+                `<div>
+                     7: Normal GPS point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_551b9a92f16ceced42200fd94ef9449d = L.marker(
+                [32.2353314, -110.9539815],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_811ff3c103a70d1d44a15a24acfba588 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    7\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_551b9a92f16ceced42200fd94ef9449d.setIcon(div_icon_811ff3c103a70d1d44a15a24acfba588);
+            
+    
+            var circle_marker_2d39378907ae0af3a9df08d9d805a767 = L.circleMarker(
                 [32.2354415, -110.954323],
-                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-        var popup_d5d41ff3630e64c7cbcf8c9ca5da90e5 = L.popup({
+        var popup_5863ae7fdc0e35f810922cd710b70668 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_d18822da8aff9056d78898188bca476f = $(`<div id="html_d18822da8aff9056d78898188bca476f" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> Normal GPS data<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 17:14:01+00:00<br>             <b>Latitude:</b> 32.2354415<br>             <b>Longitude:</b> -110.954323<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 0             </div>`)[0];
-                popup_d5d41ff3630e64c7cbcf8c9ca5da90e5.setContent(html_d18822da8aff9056d78898188bca476f);
+                var html_658b6c8b24c5bb082ceada4684a4d12c = $(`<div id="html_658b6c8b24c5bb082ceada4684a4d12c" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> Normal GPS point<br>         <b>Path point:</b> 8/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 17:14:01+00:00<br>         <b>Latitude:</b> 32.2354415<br>         <b>Longitude:</b> -110.954323<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 0         </div>`)[0];
+                popup_5863ae7fdc0e35f810922cd710b70668.setContent(html_658b6c8b24c5bb082ceada4684a4d12c);
             
         
 
-        circle_marker_e4138d4625dc87e450ee103631fba290.bindPopup(popup_d5d41ff3630e64c7cbcf8c9ca5da90e5)
+        circle_marker_2d39378907ae0af3a9df08d9d805a767.bindPopup(popup_5863ae7fdc0e35f810922cd710b70668)
         ;
 
         
     
     
-            circle_marker_e4138d4625dc87e450ee103631fba290.bindTooltip(
+            circle_marker_2d39378907ae0af3a9df08d9d805a767.bindTooltip(
                 `<div>
-                     Normal GPS data | point 9
+                     8: Normal GPS point
                  </div>`,
                 {
   "sticky": true,
@@ -255,32 +694,48 @@
             );
         
     
-            var circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f = L.circleMarker(
+            var marker_131c4abd4bdd249d9d67f60c82e0e1dd = L.marker(
+                [32.2354415, -110.954323],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_df5bed8bfd4230912c943376817917b4 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: green;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    8\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_131c4abd4bdd249d9d67f60c82e0e1dd.setIcon(div_icon_df5bed8bfd4230912c943376817917b4);
+            
+    
+            var circle_marker_1b327a12a63c97feeeaafedbf3706b0a = L.circleMarker(
                 [32.2314302, -110.945113],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-        var popup_c4ce4f7204c90d8ad8ec5226a4c92eb1 = L.popup({
+        var popup_b0117948e7f51d2eeed85ea9271debb2 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_38c476ceb798a42fe184e3ed61d54b5f = $(`<div id="html_38c476ceb798a42fe184e3ed61d54b5f" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> GPS spoofing attack<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 00:00:09+00:00<br>             <b>Latitude:</b> 32.2314302<br>             <b>Longitude:</b> -110.945113<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 1             </div>`)[0];
-                popup_c4ce4f7204c90d8ad8ec5226a4c92eb1.setContent(html_38c476ceb798a42fe184e3ed61d54b5f);
+                var html_eab427105b374236810095909fe73e99 = $(`<div id="html_eab427105b374236810095909fe73e99" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> GPS spoofing attack point<br>         <b>Path point:</b> 9/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 00:00:09+00:00<br>         <b>Latitude:</b> 32.2314302<br>         <b>Longitude:</b> -110.945113<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 1         </div>`)[0];
+                popup_b0117948e7f51d2eeed85ea9271debb2.setContent(html_eab427105b374236810095909fe73e99);
             
         
 
-        circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f.bindPopup(popup_c4ce4f7204c90d8ad8ec5226a4c92eb1)
+        circle_marker_1b327a12a63c97feeeaafedbf3706b0a.bindPopup(popup_b0117948e7f51d2eeed85ea9271debb2)
         ;
 
         
     
     
-            circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f.bindTooltip(
+            circle_marker_1b327a12a63c97feeeaafedbf3706b0a.bindTooltip(
                 `<div>
-                     GPS spoofing attack | point 0
+                     9: GPS spoofing attack point
                  </div>`,
                 {
   "sticky": true,
@@ -288,32 +743,146 @@
             );
         
     
-            var circle_marker_6e12a7531998ec21cf04c5e228df4405 = L.circleMarker(
+            var marker_4b3fa53fb9c2a9751005c80e4d7ac880 = L.marker(
+                [32.2314302, -110.945113],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_763f5d7df9da0915978c5b543272ed33 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: red;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    9\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_4b3fa53fb9c2a9751005c80e4d7ac880.setIcon(div_icon_763f5d7df9da0915978c5b543272ed33);
+            
+    
+            var circle_marker_2b3de2e9254d89fa6c68741f38c4316e = L.circleMarker(
+                [32.0955495, -111.2030379],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_c2a69181e344fe1e108b3bc637aeaddb = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5df2b3c96775c053e8df860811d324c = $(`<div id="html_b5df2b3c96775c053e8df860811d324c" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> GPS spoofing attack point<br>         <b>Path point:</b> 10/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 08:05:20+00:00<br>         <b>Latitude:</b> 32.0955495<br>         <b>Longitude:</b> -111.2030379<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 1         </div>`)[0];
+                popup_c2a69181e344fe1e108b3bc637aeaddb.setContent(html_b5df2b3c96775c053e8df860811d324c);
+            
+        
+
+        circle_marker_2b3de2e9254d89fa6c68741f38c4316e.bindPopup(popup_c2a69181e344fe1e108b3bc637aeaddb)
+        ;
+
+        
+    
+    
+            circle_marker_2b3de2e9254d89fa6c68741f38c4316e.bindTooltip(
+                `<div>
+                     10: GPS spoofing attack point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_98adf57bbee475ce7feb39a663a50597 = L.marker(
+                [32.0955495, -111.2030379],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_a676b187a3ff84ac0c8e636d5fa5567b = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: red;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    10\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_98adf57bbee475ce7feb39a663a50597.setIcon(div_icon_a676b187a3ff84ac0c8e636d5fa5567b);
+            
+    
+            var circle_marker_8d5aba24f6355f690664a7ffd03ab1d7 = L.circleMarker(
+                [23.1065467, 113.2596686],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+        var popup_482b21156f430c3b3013b97465f3061f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7a3ee829fb3d10dab7f5effe9989149e = $(`<div id="html_7a3ee829fb3d10dab7f5effe9989149e" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> GPS spoofing attack point<br>         <b>Path point:</b> 11/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 13:35:42+00:00<br>         <b>Latitude:</b> 23.1065467<br>         <b>Longitude:</b> 113.2596686<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 1         </div>`)[0];
+                popup_482b21156f430c3b3013b97465f3061f.setContent(html_7a3ee829fb3d10dab7f5effe9989149e);
+            
+        
+
+        circle_marker_8d5aba24f6355f690664a7ffd03ab1d7.bindPopup(popup_482b21156f430c3b3013b97465f3061f)
+        ;
+
+        
+    
+    
+            circle_marker_8d5aba24f6355f690664a7ffd03ab1d7.bindTooltip(
+                `<div>
+                     11: GPS spoofing attack point
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_d9c559f02cd111f0247587c2c63f8af5 = L.marker(
+                [23.1065467, 113.2596686],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_d045d41979d884d8512901b660a23970 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: red;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    11\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_d9c559f02cd111f0247587c2c63f8af5.setIcon(div_icon_d045d41979d884d8512901b660a23970);
+            
+    
+            var circle_marker_38798d14ea07927ac885db89e0f655cc = L.circleMarker(
                 [32.2502265, -110.9532811],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.9, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-        var popup_f5fc20462e23312c632e93634cd50ebd = L.popup({
+        var popup_173396b1e6a576ae9192363c0983ec7f = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_470fb69abbb48770470ea3a911054ce7 = $(`<div id="html_470fb69abbb48770470ea3a911054ce7" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> GPS spoofing attack<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 15:03:14+00:00<br>             <b>Latitude:</b> 32.2502265<br>             <b>Longitude:</b> -110.9532811<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 1             </div>`)[0];
-                popup_f5fc20462e23312c632e93634cd50ebd.setContent(html_470fb69abbb48770470ea3a911054ce7);
+                var html_f0dfa784f65261051510926033277a27 = $(`<div id="html_f0dfa784f65261051510926033277a27" style="width: 100.0%; height: 100.0%;">         <b>Status:</b> GPS spoofing attack point<br>         <b>Path point:</b> 12/12<br>         <b>Device/file:</b> AV-GPS-Dataset-1<br>         <b>Source file:</b> AV-GPS-Dataset-1.csv<br>         <hr>         <b>Timestamp:</b> 2026-01-01 15:03:14+00:00<br>         <b>Latitude:</b> 32.2502265<br>         <b>Longitude:</b> -110.9532811<br>         <b>Altitude:</b> nan<br>         <b>Speed:</b> nan<br>         <b>Heading:</b> nan<br>         <b>is_spoofed:</b> 1         </div>`)[0];
+                popup_173396b1e6a576ae9192363c0983ec7f.setContent(html_f0dfa784f65261051510926033277a27);
             
         
 
-        circle_marker_6e12a7531998ec21cf04c5e228df4405.bindPopup(popup_f5fc20462e23312c632e93634cd50ebd)
+        circle_marker_38798d14ea07927ac885db89e0f655cc.bindPopup(popup_173396b1e6a576ae9192363c0983ec7f)
         ;
 
         
     
     
-            circle_marker_6e12a7531998ec21cf04c5e228df4405.bindTooltip(
+            circle_marker_38798d14ea07927ac885db89e0f655cc.bindTooltip(
                 `<div>
-                     GPS spoofing attack | point 9
+                     12: GPS spoofing attack point
                  </div>`,
                 {
   "sticky": true,
@@ -321,14 +890,30 @@
             );
         
     
-            var marker_80b0989f9b69d4f1d3651426f18fa8d8 = L.marker(
+            var marker_98545388c8be29bcccf4bfe5bd32459b = L.marker(
+                [32.2502265, -110.9532811],
+                {
+}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
+        
+    
+            var div_icon_a9ab98c1f701c58d7d8ce329caa4ef27 = L.divIcon({
+  "html": "\n                \u003cdiv style=\"\n                    font-size: 12px;\n                    font-weight: bold;\n                    color: white;\n                    background: red;\n                    border-radius: 50%;\n                    width: 22px;\n                    height: 22px;\n                    line-height: 22px;\n                    text-align: center;\n                    border: 2px solid white;\n                    box-shadow: 0 1px 4px rgba(0,0,0,0.4);\n                \"\u003e\n                    12\n                \u003c/div\u003e\n                ",
+  "className": "empty",
+});
+        
+    
+                marker_98545388c8be29bcccf4bfe5bd32459b.setIcon(div_icon_a9ab98c1f701c58d7d8ce329caa4ef27);
+            
+    
+            var marker_42194252c093f41906d0d99f72511842 = L.marker(
                 [32.2312767, -110.9452798],
                 {
 }
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            var icon_aeb1b9b8287a97ccb6f0d842885547dc = L.AwesomeMarkers.icon(
+            var icon_973939ed92b3ffe32e1d87e2143b5675 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "green",
   "iconColor": "white",
@@ -339,26 +924,26 @@
             );
         
     
-        var popup_d90543b9531459eceaeba4e6a7daa687 = L.popup({
+        var popup_a948325c09a6808660272b1f6129756d = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_c9919f6cac1eef4d6685aa08a6807dd6 = $(`<div id="html_c9919f6cac1eef4d6685aa08a6807dd6" style="width: 100.0%; height: 100.0%;">Start of normal GPS trajectory</div>`)[0];
-                popup_d90543b9531459eceaeba4e6a7daa687.setContent(html_c9919f6cac1eef4d6685aa08a6807dd6);
+                var html_2a6e6c63b3f19e2ec9f7b4c25661f9a2 = $(`<div id="html_2a6e6c63b3f19e2ec9f7b4c25661f9a2" style="width: 100.0%; height: 100.0%;">Start of GPS trajectory</div>`)[0];
+                popup_a948325c09a6808660272b1f6129756d.setContent(html_2a6e6c63b3f19e2ec9f7b4c25661f9a2);
             
         
 
-        marker_80b0989f9b69d4f1d3651426f18fa8d8.bindPopup(popup_d90543b9531459eceaeba4e6a7daa687)
+        marker_42194252c093f41906d0d99f72511842.bindPopup(popup_a948325c09a6808660272b1f6129756d)
         ;
 
         
     
     
-            marker_80b0989f9b69d4f1d3651426f18fa8d8.bindTooltip(
+            marker_42194252c093f41906d0d99f72511842.bindTooltip(
                 `<div>
-                     Start
+                     Start of trajectory
                  </div>`,
                 {
   "sticky": true,
@@ -366,17 +951,17 @@
             );
         
     
-                marker_80b0989f9b69d4f1d3651426f18fa8d8.setIcon(icon_aeb1b9b8287a97ccb6f0d842885547dc);
+                marker_42194252c093f41906d0d99f72511842.setIcon(icon_973939ed92b3ffe32e1d87e2143b5675);
             
     
-            var marker_b5d311ddff37c741747700af3f161289 = L.marker(
+            var marker_63708cfcdee36d48e28f79cbb5d92429 = L.marker(
                 [32.2314302, -110.945113],
                 {
 }
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            var icon_3a474131f09e190d6f29a5564d531226 = L.AwesomeMarkers.icon(
+            var icon_03820d5d2b1ac558d616f212ea841a62 = L.AwesomeMarkers.icon(
                 {
   "markerColor": "orange",
   "iconColor": "white",
@@ -387,24 +972,24 @@
             );
         
     
-        var popup_bbec09ba3551b52fa05b79e704826ada = L.popup({
+        var popup_092d16028cb77c812b2f3bf9293006ce = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_b2881cdcaa31301ae2ae7eec5c6b34c9 = $(`<div id="html_b2881cdcaa31301ae2ae7eec5c6b34c9" style="width: 100.0%; height: 100.0%;">Spoofing starts here</div>`)[0];
-                popup_bbec09ba3551b52fa05b79e704826ada.setContent(html_b2881cdcaa31301ae2ae7eec5c6b34c9);
+                var html_e9575d5bc0e11c14082942fd33de2c89 = $(`<div id="html_e9575d5bc0e11c14082942fd33de2c89" style="width: 100.0%; height: 100.0%;">Spoofing starts here</div>`)[0];
+                popup_092d16028cb77c812b2f3bf9293006ce.setContent(html_e9575d5bc0e11c14082942fd33de2c89);
             
         
 
-        marker_b5d311ddff37c741747700af3f161289.bindPopup(popup_bbec09ba3551b52fa05b79e704826ada)
+        marker_63708cfcdee36d48e28f79cbb5d92429.bindPopup(popup_092d16028cb77c812b2f3bf9293006ce)
         ;
 
         
     
     
-            marker_b5d311ddff37c741747700af3f161289.bindTooltip(
+            marker_63708cfcdee36d48e28f79cbb5d92429.bindTooltip(
                 `<div>
                      Spoofing starts here
                  </div>`,
@@ -414,40 +999,40 @@
             );
         
     
-                marker_b5d311ddff37c741747700af3f161289.setIcon(icon_3a474131f09e190d6f29a5564d531226);
+                marker_63708cfcdee36d48e28f79cbb5d92429.setIcon(icon_03820d5d2b1ac558d616f212ea841a62);
             
     
-            var circle_bd70412f6ad771d3a68906dbc6cea78c = L.circle(
+            var circle_c58d2b7d063d5783e3289408213f683d = L.circle(
                 [32.2314302, -110.945113],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25, "stroke": true, "weight": 3}
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30, "stroke": true, "weight": 3}
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-        var popup_23223898638f8f54068669fe6d8b0217 = L.popup({
+        var popup_d10f4c7e72fa8c28bb771938895f4577 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_85b52343a4e18a749088962f748a388c = $(`<div id="html_85b52343a4e18a749088962f748a388c" style="width: 100.0%; height: 100.0%;">Suspicious GPS trajectory deviation starts here</div>`)[0];
-                popup_23223898638f8f54068669fe6d8b0217.setContent(html_85b52343a4e18a749088962f748a388c);
+                var html_56d505dcb54e113506b8bdc95774421d = $(`<div id="html_56d505dcb54e113506b8bdc95774421d" style="width: 100.0%; height: 100.0%;">Suspicious GPS trajectory deviation starts here</div>`)[0];
+                popup_d10f4c7e72fa8c28bb771938895f4577.setContent(html_56d505dcb54e113506b8bdc95774421d);
             
         
 
-        circle_bd70412f6ad771d3a68906dbc6cea78c.bindPopup(popup_23223898638f8f54068669fe6d8b0217)
+        circle_c58d2b7d063d5783e3289408213f683d.bindPopup(popup_d10f4c7e72fa8c28bb771938895f4577)
         ;
 
         
     
     
-            var marker_4087d94e98739260f98233a5f493a93c = L.marker(
+            var marker_228d85e01ba3f6aa0f56880b26f4cba8 = L.marker(
                 [32.2502265, -110.9532811],
                 {
 }
-            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+            ).addTo(map_3e0fe6097956b44aace4c96ecb5e41ec);
         
     
-            var icon_c1393f4def86f453f00e0f97f52a8e90 = L.AwesomeMarkers.icon(
+            var icon_7b79747cdeb443eebec9049431b58ebe = L.AwesomeMarkers.icon(
                 {
   "markerColor": "red",
   "iconColor": "white",
@@ -458,26 +1043,26 @@
             );
         
     
-        var popup_4fa953a83264c4e242d0294d57ab1341 = L.popup({
+        var popup_b4c953ba952fe8bf56f5fa10849b4b11 = L.popup({
   "maxWidth": "100%",
 });
 
         
             
-                var html_5dccda755fa5cf9d2c933153f2ea093e = $(`<div id="html_5dccda755fa5cf9d2c933153f2ea093e" style="width: 100.0%; height: 100.0%;">Final spoofed GPS position</div>`)[0];
-                popup_4fa953a83264c4e242d0294d57ab1341.setContent(html_5dccda755fa5cf9d2c933153f2ea093e);
+                var html_81f1938921688863d467b724835c03fd = $(`<div id="html_81f1938921688863d467b724835c03fd" style="width: 100.0%; height: 100.0%;">Final GPS position</div>`)[0];
+                popup_b4c953ba952fe8bf56f5fa10849b4b11.setContent(html_81f1938921688863d467b724835c03fd);
             
         
 
-        marker_4087d94e98739260f98233a5f493a93c.bindPopup(popup_4fa953a83264c4e242d0294d57ab1341)
+        marker_228d85e01ba3f6aa0f56880b26f4cba8.bindPopup(popup_b4c953ba952fe8bf56f5fa10849b4b11)
         ;
 
         
     
     
-            marker_4087d94e98739260f98233a5f493a93c.bindTooltip(
+            marker_228d85e01ba3f6aa0f56880b26f4cba8.bindTooltip(
                 `<div>
-                     Final spoofed GPS position
+                     Final GPS position
                  </div>`,
                 {
   "sticky": true,
@@ -485,7 +1070,7 @@
             );
         
     
-                marker_4087d94e98739260f98233a5f493a93c.setIcon(icon_c1393f4def86f453f00e0f97f52a8e90);
+                marker_228d85e01ba3f6aa0f56880b26f4cba8.setIcon(icon_7b79747cdeb443eebec9049431b58ebe);
             
 </script>
 </html>
