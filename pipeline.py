@@ -18,19 +18,19 @@ GPS_CONF = PROJECT_DIR / "gps.conf"
 DATASETS = {
     "clear_sky": {
         "display_name": "Clear Sky",
-        "file": PROJECT_DIR / "clear_sky_500mb.bin",
+        "file": PROJECT_DIR / "clear_sky_5000mb.bin",
     },
     "spoof_1": {
         "display_name": "Spoof 1",
-        "file": PROJECT_DIR / "spoof_1_500mb.bin",
+        "file": PROJECT_DIR / "spoof_1_5000mb.bin",
     },
     "spoof_2": {
         "display_name": "Spoof 2",
-        "file": PROJECT_DIR / "spoof_2_500mb.bin",
+        "file": PROJECT_DIR / "spoof_2_5000mb.bin",
     },
     "spoof_4": {
         "display_name": "Spoof 4",
-        "file": PROJECT_DIR / "spoof_4_500mb.bin",
+        "file": PROJECT_DIR / "spoof_4_5000mb.bin",
     },
 }
 
