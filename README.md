@@ -1,5 +1,9 @@
 # GNSS / ADS-B Spoofing Detection Dashboard
 
+<img width="1882" height="900" alt="Image" src="https://github.com/user-attachments/assets/71ba2e9b-7759-4b10-8ce2-0e8ceb493c37" />
+
+<img width="1887" height="902" alt="Image" src="https://github.com/user-attachments/assets/34d0c4d1-e337-4a91-afd5-27bf29e46a0f" />
+
 Projekt przedstawia system do wykrywania anomalii oraz potencjalnych ataków spoofingu w danych nawigacyjnych. Aplikacja łączy dwa podejścia detekcji:
 
 1. **Model ADS-B** — analizuje trajektorie lotów oraz parametry wiadomości ADS-B.
