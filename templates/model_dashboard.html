@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Model Dashboard - ADS-B / GNSS Spoofing{% endblock %}
+
+{% block content %}
+<main class="full-page">
+    <section class="map-toolbar">
+        <div>
+            <h1>Models Dashboard</h1>
+            <p>
+                Porównanie modelu ADS-B trajectory-level oraz modelu GNSS-SDR signal-level.
+            </p>
+        </div>
+
+        <a class="button" href="/api/status" target="_blank">API Status</a>
+    </section>
+
+    {% if dashboard_exists %}
+        <iframe
+            class="dashboard-frame"
+            src="{{ dashboard_url }}">
+        </iframe>
+    {% else %}
+        <div class="empty-state">
+            <h2>Dashboard modeli nie został jeszcze wygenerowany</h2>
+            <p>
+                Uruchom:
+                <code>python scripts/generate_models_dashboard.py</code>
+            </p>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

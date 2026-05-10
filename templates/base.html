@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}ADS-B Anomaly Detection{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <div class="brand">
+            <a href="/">ADS-B Anomaly Detection</a>
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/map">Live Map</a>
+            <a href="/maps">Saved Maps</a>
+            <a href="/model-dashboard">Models</a>
+            <a href="/bin-dashboard">BIN Signals</a>
+            <a href="/api/status" target="_blank">API Status</a>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+</body>
+</html>

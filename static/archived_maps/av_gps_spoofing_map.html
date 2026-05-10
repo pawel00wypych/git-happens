@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_47ef0a10bfd1fee1fa1dfafbf7495250 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="
+        position: fixed;
+        bottom: 50px;
+        left: 50px;
+        width: 390px;
+        background-color: white;
+        border: 2px solid grey;
+        z-index: 9999;
+        font-size: 14px;
+        padding: 12px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    ">
+        <b>GPS Spoofing Trajectory Demo</b><br>
+        <span style="color:green;">━</span> Normal GPS trajectory<br>
+        <span style="color:red;">━ ━</span> Spoofed / anomalous GPS trajectory<br>
+        <span style="color:orange;">- - -</span> Transition to spoofing<br>
+        <hr>
+        Dataset: AV-GPS<br>
+        Selected device/file: AV-GPS-Dataset-1<br>
+        Normal points shown: 10<br>
+        Spoofed points shown: 10
+    </div>
+    
+    
+    <div style="
+        position: fixed;
+        top: 90px;
+        right: 40px;
+        width: 340px;
+        background-color: white;
+        border: 2px solid #cc0000;
+        z-index: 9999;
+        font-size: 15px;
+        padding: 14px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    ">
+        <b style="color:#cc0000; font-size:18px;">⚠ Spoofing anomaly</b><br>
+        Reported GPS trajectory deviates from the expected path.
+    </div>
+    
+    
+            <div class="folium-map" id="map_47ef0a10bfd1fee1fa1dfafbf7495250" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_47ef0a10bfd1fee1fa1dfafbf7495250 = L.map(
+                "map_47ef0a10bfd1fee1fa1dfafbf7495250",
+                {
+                    center: [30.857514274999993, -77.33043042999999],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 17,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_189399b0e8424708d4dec1bdef8e19c2 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_189399b0e8424708d4dec1bdef8e19c2.addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            var poly_line_4a745506314dfb808f658d52b52dcf53 = L.polyline(
+                [[32.2312767, -110.9452798], [32.2315533, -110.9452889], [32.2314508, -110.9455091], [32.2315372, -110.9446468], [32.2315347, -110.944512], [32.231266, -110.945734], [32.2315422, -110.9446087], [32.2314444, -110.945432], [32.2350435, -110.9541629], [32.2354415, -110.954323]],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "green", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.85, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            poly_line_4a745506314dfb808f658d52b52dcf53.bindTooltip(
+                `<div>
+                     Normal GPS trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_4321721283e2313b90fe56169d484ee0 = L.polyline(
+                [[32.2314302, -110.945113], [32.2502265, -110.9532811], [32.230728, -110.9521334], [32.0955495, -111.2030379], [23.1063242, 113.259804], [23.1064625, 113.2597098], [23.1065467, 113.2596686], [32.2195104, -110.9658077], [32.2311907, -110.9456396], [32.2502265, -110.9532811]],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": "10, 8", "dashOffset": null, "fill": false, "fillColor": "red", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 6}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            poly_line_4321721283e2313b90fe56169d484ee0.bindTooltip(
+                `<div>
+                     Spoofed / anomalous GPS trajectory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var poly_line_b479c63bb9a912f27d427cc4f4f4d8c8 = L.polyline(
+                [[32.2354415, -110.954323], [32.2314302, -110.945113]],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": "5, 8", "dashOffset": null, "fill": false, "fillColor": "orange", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.9, "smoothFactor": 1.0, "stroke": true, "weight": 4}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            poly_line_b479c63bb9a912f27d427cc4f4f4d8c8.bindTooltip(
+                `<div>
+                     Transition to spoofing
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_ba4e59c43391f360b439b1ea027cc003 = L.circleMarker(
+                [32.2312767, -110.9452798],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+        var popup_ad1c8bef2d76da41414167270d7d2916 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_8c6d1746ea1dde0a3a6f89fc1d97a0fd = $(`<div id="html_8c6d1746ea1dde0a3a6f89fc1d97a0fd" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> Normal GPS data<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 00:00:00+00:00<br>             <b>Latitude:</b> 32.2312767<br>             <b>Longitude:</b> -110.9452798<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 0             </div>`)[0];
+                popup_ad1c8bef2d76da41414167270d7d2916.setContent(html_8c6d1746ea1dde0a3a6f89fc1d97a0fd);
+            
+        
+
+        circle_marker_ba4e59c43391f360b439b1ea027cc003.bindPopup(popup_ad1c8bef2d76da41414167270d7d2916)
+        ;
+
+        
+    
+    
+            circle_marker_ba4e59c43391f360b439b1ea027cc003.bindTooltip(
+                `<div>
+                     Normal GPS data | point 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_e4138d4625dc87e450ee103631fba290 = L.circleMarker(
+                [32.2354415, -110.954323],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+        var popup_d5d41ff3630e64c7cbcf8c9ca5da90e5 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d18822da8aff9056d78898188bca476f = $(`<div id="html_d18822da8aff9056d78898188bca476f" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> Normal GPS data<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 17:14:01+00:00<br>             <b>Latitude:</b> 32.2354415<br>             <b>Longitude:</b> -110.954323<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 0             </div>`)[0];
+                popup_d5d41ff3630e64c7cbcf8c9ca5da90e5.setContent(html_d18822da8aff9056d78898188bca476f);
+            
+        
+
+        circle_marker_e4138d4625dc87e450ee103631fba290.bindPopup(popup_d5d41ff3630e64c7cbcf8c9ca5da90e5)
+        ;
+
+        
+    
+    
+            circle_marker_e4138d4625dc87e450ee103631fba290.bindTooltip(
+                `<div>
+                     Normal GPS data | point 9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f = L.circleMarker(
+                [32.2314302, -110.945113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+        var popup_c4ce4f7204c90d8ad8ec5226a4c92eb1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_38c476ceb798a42fe184e3ed61d54b5f = $(`<div id="html_38c476ceb798a42fe184e3ed61d54b5f" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> GPS spoofing attack<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 00:00:09+00:00<br>             <b>Latitude:</b> 32.2314302<br>             <b>Longitude:</b> -110.945113<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 1             </div>`)[0];
+                popup_c4ce4f7204c90d8ad8ec5226a4c92eb1.setContent(html_38c476ceb798a42fe184e3ed61d54b5f);
+            
+        
+
+        circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f.bindPopup(popup_c4ce4f7204c90d8ad8ec5226a4c92eb1)
+        ;
+
+        
+    
+    
+            circle_marker_0a5bee0e9c4c42038084ea7bd9a0654f.bindTooltip(
+                `<div>
+                     GPS spoofing attack | point 0
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var circle_marker_6e12a7531998ec21cf04c5e228df4405 = L.circleMarker(
+                [32.2502265, -110.9532811],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.85, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 6, "stroke": true, "weight": 3}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+        var popup_f5fc20462e23312c632e93634cd50ebd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_470fb69abbb48770470ea3a911054ce7 = $(`<div id="html_470fb69abbb48770470ea3a911054ce7" style="width: 100.0%; height: 100.0%;">             <b>Status:</b> GPS spoofing attack<br>             <b>Device/file:</b> AV-GPS-Dataset-1<br>             <b>Source file:</b> AV-GPS-Dataset-1.csv<br>             <hr>             <b>Timestamp:</b> 2026-01-01 15:03:14+00:00<br>             <b>Latitude:</b> 32.2502265<br>             <b>Longitude:</b> -110.9532811<br>             <b>Altitude:</b> nan<br>             <b>Speed:</b> nan<br>             <b>Heading:</b> nan<br>             <b>is_spoofed:</b> 1             </div>`)[0];
+                popup_f5fc20462e23312c632e93634cd50ebd.setContent(html_470fb69abbb48770470ea3a911054ce7);
+            
+        
+
+        circle_marker_6e12a7531998ec21cf04c5e228df4405.bindPopup(popup_f5fc20462e23312c632e93634cd50ebd)
+        ;
+
+        
+    
+    
+            circle_marker_6e12a7531998ec21cf04c5e228df4405.bindTooltip(
+                `<div>
+                     GPS spoofing attack | point 9
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+            var marker_80b0989f9b69d4f1d3651426f18fa8d8 = L.marker(
+                [32.2312767, -110.9452798],
+                {
+}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            var icon_aeb1b9b8287a97ccb6f0d842885547dc = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "play",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_d90543b9531459eceaeba4e6a7daa687 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c9919f6cac1eef4d6685aa08a6807dd6 = $(`<div id="html_c9919f6cac1eef4d6685aa08a6807dd6" style="width: 100.0%; height: 100.0%;">Start of normal GPS trajectory</div>`)[0];
+                popup_d90543b9531459eceaeba4e6a7daa687.setContent(html_c9919f6cac1eef4d6685aa08a6807dd6);
+            
+        
+
+        marker_80b0989f9b69d4f1d3651426f18fa8d8.bindPopup(popup_d90543b9531459eceaeba4e6a7daa687)
+        ;
+
+        
+    
+    
+            marker_80b0989f9b69d4f1d3651426f18fa8d8.bindTooltip(
+                `<div>
+                     Start
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_80b0989f9b69d4f1d3651426f18fa8d8.setIcon(icon_aeb1b9b8287a97ccb6f0d842885547dc);
+            
+    
+            var marker_b5d311ddff37c741747700af3f161289 = L.marker(
+                [32.2314302, -110.945113],
+                {
+}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            var icon_3a474131f09e190d6f29a5564d531226 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bbec09ba3551b52fa05b79e704826ada = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b2881cdcaa31301ae2ae7eec5c6b34c9 = $(`<div id="html_b2881cdcaa31301ae2ae7eec5c6b34c9" style="width: 100.0%; height: 100.0%;">Spoofing starts here</div>`)[0];
+                popup_bbec09ba3551b52fa05b79e704826ada.setContent(html_b2881cdcaa31301ae2ae7eec5c6b34c9);
+            
+        
+
+        marker_b5d311ddff37c741747700af3f161289.bindPopup(popup_bbec09ba3551b52fa05b79e704826ada)
+        ;
+
+        
+    
+    
+            marker_b5d311ddff37c741747700af3f161289.bindTooltip(
+                `<div>
+                     Spoofing starts here
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b5d311ddff37c741747700af3f161289.setIcon(icon_3a474131f09e190d6f29a5564d531226);
+            
+    
+            var circle_bd70412f6ad771d3a68906dbc6cea78c = L.circle(
+                [32.2314302, -110.945113],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.15, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 25, "stroke": true, "weight": 3}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+        var popup_23223898638f8f54068669fe6d8b0217 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_85b52343a4e18a749088962f748a388c = $(`<div id="html_85b52343a4e18a749088962f748a388c" style="width: 100.0%; height: 100.0%;">Suspicious GPS trajectory deviation starts here</div>`)[0];
+                popup_23223898638f8f54068669fe6d8b0217.setContent(html_85b52343a4e18a749088962f748a388c);
+            
+        
+
+        circle_bd70412f6ad771d3a68906dbc6cea78c.bindPopup(popup_23223898638f8f54068669fe6d8b0217)
+        ;
+
+        
+    
+    
+            var marker_4087d94e98739260f98233a5f493a93c = L.marker(
+                [32.2502265, -110.9532811],
+                {
+}
+            ).addTo(map_47ef0a10bfd1fee1fa1dfafbf7495250);
+        
+    
+            var icon_c1393f4def86f453f00e0f97f52a8e90 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "remove",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4fa953a83264c4e242d0294d57ab1341 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5dccda755fa5cf9d2c933153f2ea093e = $(`<div id="html_5dccda755fa5cf9d2c933153f2ea093e" style="width: 100.0%; height: 100.0%;">Final spoofed GPS position</div>`)[0];
+                popup_4fa953a83264c4e242d0294d57ab1341.setContent(html_5dccda755fa5cf9d2c933153f2ea093e);
+            
+        
+
+        marker_4087d94e98739260f98233a5f493a93c.bindPopup(popup_4fa953a83264c4e242d0294d57ab1341)
+        ;
+
+        
+    
+    
+            marker_4087d94e98739260f98233a5f493a93c.bindTooltip(
+                `<div>
+                     Final spoofed GPS position
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4087d94e98739260f98233a5f493a93c.setIcon(icon_c1393f4def86f453f00e0f97f52a8e90);
+            
+</script>
+</html>

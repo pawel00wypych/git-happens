@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Live Map - ADS-B Anomaly Detection{% endblock %}
+
+{% block head_extra %}
+<script>
+    async function refreshSummary() {
+        try {
+            const response = await fetch("/api/predictions/summary");
+            if (!response.ok) return;
+
+            const data = await response.json();
+
+            document.getElementById("total-aircraft").textContent = data.total_aircraft;
+            document.getElementById("predicted-anomalies").textContent = data.predicted_anomalies;
+            document.getElementById("anomaly-rate").textContent = (data.anomaly_rate * 100).toFixed(2) + "%";
+            document.getElementById("avg-probability").textContent = data.average_attack_probability.toFixed(3);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    function refreshMapFrame() {
+        const iframe = document.getElementById("map-frame");
+        if (!iframe) return;
+
+        const baseUrl = "{{ map_url }}";
+        iframe.src = baseUrl + "?t=" + new Date().getTime();
+    }
+
+    setInterval(() => {
+        refreshSummary();
+        refreshMapFrame();
+    }, 60000);
+
+    window.onload = () => {
+        refreshSummary();
+    };
+</script>
+{% endblock %}
+
+{% block content %}
+<main class="full-page">
+    <section class="map-toolbar">
+        <div>
+            <h1>Live OpenSky Map</h1>
+            <p>
+                Mapa lotów, trajektorii oraz predykcji anomalii ADS-B.
+            </p>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <span>Total aircraft</span>
+                <strong id="total-aircraft">-</strong>
+            </div>
+
+            <div class="stat">
+                <span>Anomalies</span>
+                <strong id="predicted-anomalies">-</strong>
+            </div>
+
+            <div class="stat">
+                <span>Anomaly rate</span>
+                <strong id="anomaly-rate">-</strong>
+            </div>
+
+            <div class="stat">
+                <span>Avg probability</span>
+                <strong id="avg-probability">-</strong>
+            </div>
+        </div>
+
+        <button class="button" onclick="refreshMapFrame()">Odśwież mapę</button>
+    </section>
+
+    {% if map_exists %}
+        <iframe
+            id="map-frame"
+            class="map-frame"
+            src="{{ map_url }}">
+        </iframe>
+    {% else %}
+        <div class="empty-state">
+            <h2>Mapa nie została jeszcze wygenerowana</h2>
+            <p>
+                Worker OpenSky może być wyłączony albo API ma aktualnie rate limit.
+                Sprawdź <a href="/api/status" target="_blank">/api/status</a>.
+            </p>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}

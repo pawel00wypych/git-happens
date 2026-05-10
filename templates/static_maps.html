@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Saved Maps - ADS-B Anomaly Detection{% endblock %}
+
+{% block content %}
+<main class="container">
+    <section class="hero">
+        <h1>Zapisane mapy statyczne</h1>
+        <p>
+            Tutaj możesz przejść do map zapisanych z wcześniejszych eksperymentów:
+            dataset, receiver messages, predykcje testowe i inne mapy HTML.
+        </p>
+    </section>
+
+    {% if maps %}
+        <section class="cards">
+            {% for map in maps %}
+                <a class="card" href="{{ map.url }}" target="_blank">
+                    <h2>{{ map.name }}</h2>
+                    <p>{{ map.filename }}</p>
+                </a>
+            {% endfor %}
+        </section>
+    {% else %}
+        <div class="empty-state">
+            <h2>Brak zapisanych map</h2>
+            <p>
+                Wrzuć pliki HTML do folderu:
+                <code>static/archived_maps/</code>
+            </p>
+        </div>
+    {% endif %}
+</main>
+{% endblock %}
