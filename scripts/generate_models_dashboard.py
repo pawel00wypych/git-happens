@@ -560,11 +560,8 @@ def build_html(sections: list[str]) -> str:
 </head>
 <body>
     <div class="intro">
-        <h1>Two-model ADS-B / GNSS Spoofing Detection Dashboard</h1>
-        <p>
-            Dashboard porównuje dwa modele: model ADS-B działający na poziomie trajektorii
-            oraz model GNSS-SDR działający na poziomie cech sygnału radiowego.
-        </p>
+        <h1>Dashboard porównuje dwa modele: model ADS-B działający na poziomie trajektorii
+            oraz model GNSS-SDR działający na poziomie cech sygnału radiowego.</h1>
     </div>
 
     {''.join(sections)}

@@ -5,20 +5,16 @@
 {% block content %}
 <main class="full-page">
     <section class="map-toolbar">
-        <div>
+        <div style="width: 100%; text-align: center;">
             <h1>Models Dashboard</h1>
-            <p>
-                Porównanie modelu ADS-B trajectory-level oraz modelu GNSS-SDR signal-level.
-            </p>
         </div>
-
-        <a class="button" href="/api/status" target="_blank">API Status</a>
     </section>
 
     {% if dashboard_exists %}
         <iframe
             class="dashboard-frame"
-            src="{{ dashboard_url }}">
+            src="{{ dashboard_url }}?v={{ cache_buster }}">
+
         </iframe>
     {% else %}
         <div class="empty-state">

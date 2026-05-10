@@ -8,7 +8,7 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from starlette.requests import Request
-
+from datetime import datetime
 from opensky_worker import run_opensky_worker
 
 
@@ -311,5 +311,6 @@ def model_dashboard_page(request: Request):
         context={
             "dashboard_exists": MODEL_DASHBOARD_FILE.exists(),
             "dashboard_url": "/static/generated/model_dashboard.html",
+            "cache_buster": int(datetime.now().timestamp()),
         },
     )
