@@ -455,6 +455,12 @@ Eksport raportów do HTML/PDF.
 Projekt przygotowany w ramach Hackathonu Kościuszkon - detekcja anomalii i spoofingu w systemach nawigacyjnych GNSS oraz danych ADS-B.
 
 dane pobrane z:
-https://data.mendeley.com/datasets/6fhw732ccz/1
-https://zenodo.org/records/17413258
-https://github.com/gnss-sdr/gnss-sdr?utm_source=chatgpt.com
+
+- https://data.mendeley.com/datasets/6fhw732ccz/1
+
+- https://zenodo.org/records/17413258
+
+- https://github.com/gnss-sdr/gnss-sdr
+  
+- https://radionavlab.ae.utexas.edu/texbat/
+
